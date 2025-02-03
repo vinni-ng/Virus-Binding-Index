@@ -2,6 +2,8 @@
 import pandas as pd
 from Bio import SeqIO
 
+print("Data curation started...!")
+
 # Function 1
 def load_metadata(csv_file):
     """
@@ -143,6 +145,6 @@ if __name__ == "__main__":
     final_cleaned_df = drop_duplicates_on_sequence(all_df_merged)
 
     # Save the final cleaned dataset
-    output_file = "final_output.csv"
+    output_file = "cutated_dataset.csv"
     final_cleaned_df.to_csv(output_file, index=False)
     print(f"Data processing completed. Cleaned data saved to {output_file}.")
