@@ -103,3 +103,74 @@ plt.ylabel('True Positive Rate')
 plt.title('ROC Curve')
 plt.legend(loc="lower right")
 plt.show()
+
+# @title ROC_AUC for each family
+# Dictionary to store AUC scores for each family
+family_auc_scores = {}
+
+# Iterate over each family in the dataset
+for family, df in test_df.groupby("Family"):
+    if len(df["Plant"].unique()) < 2:  # Skip families that don't have both 0 and 1
+        print(f"Skipping Family '{family}' (only one class present)")
+        continue
+
+    y_true = df["Human"]  # True labels
+    y_pred = df["Binds"]  # Predicted labels
+
+    # Compute ROC AUC score
+    roc_auc = roc_auc_score(y_true, y_pred)
+    family_auc_scores[family] = roc_auc
+
+    # Compute ROC curve
+    fpr, tpr, _ = roc_curve(y_true, y_pred)
+
+    # Plot ROC curve for each family
+    plt.figure(figsize=(6, 4))
+    plt.plot(fpr, tpr, color='blue', label=f'AUC = {roc_auc:.2f}')
+    plt.plot([0, 1], [0, 1], color='gray', linestyle='--')  # Random classifier line
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title(f'ROC Curve - {family}')
+    plt.legend(loc="lower right")
+    plt.show()
+
+# Print all AUC scores
+print("\nROC AUC Scores for Each Family:")
+for family, auc in family_auc_scores.items():
+    print(f"Family: {family}, AUC: {auc:.2f}")
+
+# @title Checking false positives and false negatives
+def calculate_false_positives_and_false_negatives(test_df):
+    """
+    Calculate the number of False Positives (FP) and False Negatives (FN) based on the 'Human' and 'Binds' columns.
+    Also, return the accession IDs for False Positives.
+    """
+    false_positives = 0
+    false_negatives = 0
+    false_positive_accessions = []
+
+    # Iterate through each row of the test dataframe
+    for idx, row in test_df.iterrows():
+        true_label = row['Human']
+        predicted_label = row['Binds']
+        accession_id = row.get('Accession', None)  # Assuming there's an 'Accession_ID' column
+
+        # False Positive: Predicted 1 (human-like), but actual label is 0 (non-human)
+        if predicted_label == 1 and true_label == 0:
+            false_positives += 1
+            if accession_id:
+                false_positive_accessions.append(accession_id)
+
+        # False Negative: Predicted 0 (non-human-like), but actual label is 1 (human)
+        if predicted_label == 0 and true_label == 1:
+            false_negatives += 1
+
+    return false_positives, false_negatives, false_positive_accessions
+
+# Example usage:
+false_positives, false_negatives, false_positive_accessions = calculate_false_positives_and_false_negatives(test_df)
+
+print(f"False Positives: {false_positives}")
+print(f"False Negatives: {false_negatives}")
+print(f"False Positive Accession IDs: {false_positive_accessions}")
+
