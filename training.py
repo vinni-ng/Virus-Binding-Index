@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from collections import defaultdict
 import pickle
+import bz2file as bz2
 
 train_df = pd.read_csv("./train_data.csv")
 
@@ -206,3 +207,14 @@ with open('family_kmers_to_save.pkl', 'wb') as f:
     pickle.dump(family_kmers, f)
 
 print("Unique K-mers up to max count size have been saved to 'family_kmers_to_save.pkl'")
+
+
+def save_compressed_pickle(data, filename):
+    """Save data to a compressed bz2 pickle file."""
+    with bz2.BZ2File(filename, 'wb') as f:
+        pickle.dump(data, f)
+    print(f"Compressed pickle file saved as {filename}")
+
+# Save and compress the family_kmers dictionary
+save_compressed_pickle(family_kmers, "family_kmers_to_save.pkl.bz2")
+
