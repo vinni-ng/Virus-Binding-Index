@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 # @title Train test splitting
 # Load dataset
 try:
-    df = pd.read_csv('./Dataset.csv', encoding='latin-1')
+    df = pd.read_csv('./Animal_data.csv', encoding='latin-1')
 except FileNotFoundError:
     print("The specified file was not found.")
     raise
