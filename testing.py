@@ -117,7 +117,7 @@ family_auc_scores = {}
 
 # Iterate over each family in the dataset
 for family, df in test_df.groupby("Family"):
-    if len(df["Plant"].unique()) < 2:  # Skip families that don't have both 0 and 1
+    if len(df["Human"].unique()) < 2:  # Skip families that don't have both 0 and 1
         print(f"Skipping Family '{family}' (only one class present)")
         continue
 
@@ -180,4 +180,3 @@ false_positives, false_negatives, false_positive_accessions = calculate_false_po
 print(f"False Positives: {false_positives}")
 print(f"False Negatives: {false_negatives}")
 print(f"False Positive Accession IDs: {false_positive_accessions}")
-
