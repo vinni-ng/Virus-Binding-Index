@@ -1,6 +1,7 @@
 # Required Packages
 import pandas as pd
 from Bio import SeqIO
+import openpyxl
 
 # @title Data curation using Uniprot
 # Function 1: Load metadata from an Excel file
