@@ -7,11 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1CmS8zyECBTIbllp2CCawfxHxHDuN_9EW
 """
 
-# @title install biopython
-!pip install Bio
-
-# @title install openpyxl
-!pip install openpyxl
 
 # @title Required Packages
 import os
