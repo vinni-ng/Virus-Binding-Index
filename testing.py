@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import roc_auc_score, roc_curve
 
 test_df = pd.read_csv("./test_data.csv") 
+pickle_file = "family_kmers_to_save.pkl.bz2"
 
 # Load compressed pickle file
 def load_kmers(pickle_file):
