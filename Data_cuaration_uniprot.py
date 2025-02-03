@@ -49,8 +49,8 @@ def merge_data(metadata_df, sequences_df):
 # Main script
 if __name__ == "__main__":
     # File paths
-    excel_file = "./sequences.xlsx"  # Path to the Excel file
-    fasta_file = "./sequences.fasta"  # Path to the FASTA file
+    excel_file = "./sequences_uniprot.xlsx"  # Path to the Excel file
+    fasta_file = "./sequences_uniprot.fasta"  # Path to the FASTA file
 
     # Load metadata and sequences
     metadata_df = load_metadata(excel_file)
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     merged_df = merge_data(metadata_df, sequences_df)
 
     # Save the merged DataFrame to a CSV file
-    output_file = "./merged_data.csv"
+    output_file = "./curated_data_uniprot.csv"
     merged_df.to_csv(output_file, index=False)
 
     print(f"Merged data saved to {output_file}")
